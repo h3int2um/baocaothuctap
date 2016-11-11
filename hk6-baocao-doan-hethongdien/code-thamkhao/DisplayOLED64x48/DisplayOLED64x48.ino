@@ -34,7 +34,7 @@ void loop(){
     display.setCursor(0,0);         // Vi tri cua con tro: (x, y) = (column, row)
     display.print("n:");            // Dua chu hoac so muon hien thi vao trong bo nho cua OLED
     display.println(i);    
-    display.display();              // Hien thi chu hoac so dua dua vao bo nho cua OLED
+    display.display();              // Hien thi chu hoac so da dua vao bo nho cua OLED
     delay(2000);
     display.clearDisplay();         // Xoa bo nho cu
   }
