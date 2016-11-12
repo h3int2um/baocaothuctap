@@ -27,6 +27,10 @@
 Adafruit_SSD1306 display(OLED_RESET);
 BME280_SPI bme(BME_CS,BME_MOSI,BME_MISO,BME_SCK);
 
+// Cac chuong trinh con duoc dinh nghia
+void DisplayBME280();       // Do gia tri va hien thi len OLED
+void oled64x48(float T, float H, float P);    // Hien thi so lieu len OLED
+
 void setup(){
   Serial.begin(9600);
   // Khoi tao voi dia chi I2C 0x3C (loai OLED 64x48) 
@@ -52,12 +56,19 @@ void loop(){
 
 void DisplayBME280(){   // Hien thi gia tri tu cam bien len OLED
   float T, H, P;
-  bme.readSensor();
   
+  bme.readSensor();  
   T = bme.getTemperature_C();     //Nhiet do (C)
   H = bme.getHumidity();          // Do am   (%)
   P = bme.getPressure_MB();       // Ap suat (milibar-mB)
 
+  oled64x48(T, H, P)              // Hien thi gia tri do duoc len OLED 64x48
+      
+  delay(2000);
+  display.clearDisplay();         // Xoa bo nho
+}
+
+void oled64x48(float T, float H, float P){    // Hien thi gia tri do duoc len OLED 64x48
   display.setTextSize(1);
   display.setTextColor(WHITE);
   display.setCursor(0,0);
@@ -71,7 +82,4 @@ void DisplayBME280(){   // Hien thi gia tri tu cam bien len OLED
   display.setCursor(40,30); display.println("mB");
   
   display.display();
-  delay(2000);
-  display.clearDisplay(); // Xoa bo nho
 }
-
