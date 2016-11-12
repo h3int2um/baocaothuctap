@@ -1,5 +1,5 @@
 /* 
- * Chuong trinh hien thi text len OLED 64x48 - I2C adress = 0x3C
+ * Chuong trinh hien thi thong so nhiet do, do am va ap suat cua cam bien BME280(giao tiep chuan SPI) len OLED 64x48 (giao tiep chuan I2C voi I2C adress = 0x3C)
  * Thu vien can cai dat:
  * 1. https://github.com/mcauser/Adafruit_SSD1306/tree/esp8266-64x48
  * 2. https://github.com/adafruit/Adafruit-GFX-Library
@@ -67,7 +67,7 @@ void DisplayBME280(){   // Hien thi gia tri tu cam bien len OLED
   display.print("H:");  display.print(H);  display.println("%");
 
   display.setCursor(0,20);
-  display.print("P:");  display.println(1012.70);
+  display.print("P:");  display.println(P);
   display.setCursor(40,30); display.println("mB");
   
   display.display();
