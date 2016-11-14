@@ -23,23 +23,27 @@ WiFiClient  client;
 unsigned long myChannelNumber = 182106;           // Number Channel
 const char * myWriteAPIKey = "RVNVJX98COFZV11Y"; // write API key
 
-
 #define OLED_RESET 0
+Adafruit_SSD1306 display(OLED_RESET);
 
 #define SSD1306_LCDHEIGHT 48
 #if (SSD1306_LCDHEIGHT != 48)
 #error("Height incorrect, please fix Adafruit_SSD1306.h!");
 #endif
 
-Adafruit_SSD1306 display(OLED_RESET);
-
 //BME280_I2C bme;              // I2C using default 0x77 
 BME280_I2C bme(0x76);         // I2C using address 0x76
 
 // Cac chuong trinh con duoc dinh nghia
-void DisplayBME280();       // Do gia tri va hien thi len OLED va ThingSpeak
-void oled64x48(float T, float H, float P);    // Hien thi so lieu len OLED
-void send_data_TS(float T, float H, float P); // Gui du lieu len ThingSpeak
+
+// Do gia tri va hien thi len OLED va ThingSpeak
+void DisplayBME280();
+
+// Hien thi so lieu len OLED
+void oled64x48(float T, float H, float P);
+
+// Gui du lieu len ThingSpeak
+void send_data_TS(float T, float H, float P);
  
 void setup(){  
   // Khoi tao voi dia chi I2C 0x3C (loai OLED 64x48) 
@@ -73,7 +77,7 @@ void DisplayBME280(){   // Hien thi gia tri tu cam bien len OLED
   H = bme.getHumidity();          // Do am   (%)
   P = bme.getPressure_MB();       // Ap suat (milibar-mB)
 
-  oled64x48(T, H, P);            // Hien thi gia tri do duoc len OLED 64x48
+  oled64x48(T, H, P);            // Hien thi gia tri do duoc len OLED
 
   send_data_TS(T, H, P);         // Gui du lieu len ThingSpeak
 
@@ -81,7 +85,8 @@ void DisplayBME280(){   // Hien thi gia tri tu cam bien len OLED
   display.clearDisplay();       // Xoa bo nho
 }
 
-void oled64x48(float T, float H, float P){    // Hien thi gia tri do duoc len OLED 64x48
+// Hien thi gia tri do duoc len OLED 64x48
+void oled64x48(float T, float H, float P){
   display.setTextSize(1);
   display.setTextColor(WHITE);
   display.setCursor(0,0);
@@ -97,7 +102,8 @@ void oled64x48(float T, float H, float P){    // Hien thi gia tri do duoc len OL
   display.display();
 }
 
-void send_data_TS(float T, float H, float P){     // Gui so lieu do duoc len ThingSpeak
+// Gui so lieu do duoc len ThingSpeak
+void send_data_TS(float T, float H, float P){
   ThingSpeak.setField(1, T);  // Field 1 - Temperature
   ThingSpeak.setField(2, H);  // Field 2 - Humidity
   ThingSpeak.setField(3, P);  // Field 2 - Pressure
